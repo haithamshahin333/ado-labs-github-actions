@@ -46,7 +46,6 @@ resource "azurerm_network_interface" "myterraformnic" {
     name                = "${var.azurerm_network_interface}"
     location            = "${var.location}"
     resource_group_name = "${azurerm_resource_group.rg.name}"
-    network_security_group_id = "${azurerm_network_security_group.myterraformnsg.id}"
 
     ip_configuration {
         name                          = "${var.azurerm_network_interface_ip_configuration["name"]}"
@@ -55,7 +54,11 @@ resource "azurerm_network_interface" "myterraformnic" {
         public_ip_address_id          = "${azurerm_public_ip.myterraformpublicip.id}"
     }
 
+}
 
+resource "azurerm_network_interface_security_group_association" "example" {
+    network_interface_id      = azurerm_network_interface.myterraformnic.id
+    network_security_group_id = azurerm_network_security_group.myterraformnsg.id
 }
 
 resource "random_id" "randomId" {
