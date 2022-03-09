@@ -1,7 +1,7 @@
-variable "azurerm" {
-  description = "The subscription_id, client_id, client_secret and tenant_id to setup Terraform access"
-  type = map(string)
-}
+# variable "azurerm" {
+#   description = "The subscription_id, client_id, client_secret and tenant_id to setup Terraform access"
+#   type = map(string)
+# }
 variable "location" {
   description = "The location where resources are created"
   default     = "East US"
