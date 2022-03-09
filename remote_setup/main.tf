@@ -6,6 +6,7 @@ locals {
   resource_group_name    = "${var.naming_prefix}-${random_integer.sa_num.result}"
   storage_account_name   = "${lower(var.naming_prefix)}${random_integer.sa_num.result}"
   service_principal_name = "${var.naming_prefix}-${random_integer.sa_num.result}"
+  ssh_public_key         = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC7iCN9Tc4m2PzfZbCy+v2SJStpf/lc9EloupG6IRFFIQ8tlUtZizQvvrHYThiuAgHBfBLgdPjGEvOtUYs8sjr3OAsByk+wBjPg14Tw37pKbMXdJBwKiW5Fw+/sVIsR8pyIBb84n0BFLi1W7IJJB9GK7faCVmZ7LDFGmXjgckWKQTnYgJvy133lfzBBR1w8qRpL/bpD6kU6mTv4yRGurPQQFKlfZo6497i9NYcOZdO+K3bn+yn/GvLqyhFbI4/JHnD3LkbTD/P3UMZtgj1vwmxWZcbaZBmD9AwzS5zdNdFYwfOh9poqPgtNfEFAnrk+pPHQrmMpZYPr05O0Dtj4XlT69dpNfPhic7G2qgOxIgJDokfaCE4sKwaDeUOPAQmh6ooAJNNaYTbe7ilKCQRKTJyWbM90rVAT7QDHyT84bT7Z9RREatXdIa9OBnqtpK9GLde0dOFskMkM4ub/8kwm4GMvcsk/4fUzCmz0yVWRFCODz5QAlN9sZPqwFQWuVxPoAkoSwNf6e7NbqWzPrVngX/HGTXVGj30NNDGygvC/nTmE7DjIbDP2TJDxRtfz8MOBpNzIQ0gr8lUc/plsahSmC/loBByQJnzgZc6u5NmOFqtHr0VoEIuY3ND/vuP4cS62fERph0xQzq62man6tKdQC5Vsqr8opRpCi6FCGHbNQM3Q0Q== hshahin@DESKTOP-631K2UD"
 }
 
 ##################################################################################
@@ -76,6 +77,7 @@ resource "github_actions_secret" "actions_secret" {
     ARM_CLIENT_SECRET   = azuread_service_principal_password.gh_actions.value
     ARM_SUBSCRIPTION_ID = data.azurerm_subscription.current.subscription_id
     ARM_TENANT_ID       = data.azuread_client_config.current.tenant_id
+    SSH_PUBLIC_KEY      = local.ssh_public_key
   }
 
   repository      = var.github_repository
